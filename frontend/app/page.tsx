@@ -237,6 +237,9 @@ export default function Home() {
   const btnSecondary = `${btnBase} inline-flex items-center gap-2 px-4 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700`;
   const btnSuccess = `${btnBase} inline-flex items-center gap-2 px-5 rounded-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-md`;
   const btnDanger = `${btnBase} inline-flex items-center gap-2 px-4 rounded-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white shadow-sm`;
+  // card styles
+  const card = `bg-gradient-to-br from-[var(--card-from)] to-[var(--card-to)] border border-gray-800/60 rounded-xl p-4 shadow-md`;
+  const cardCompact = `bg-gradient-to-br from-[var(--card-from)] to-[var(--card-to)] border border-gray-800/60 rounded-xl px-4 py-3 shadow-sm`;
 
   const loadState = useCallback(async () => {
     try { setState(await call("/status")); } catch {}
@@ -359,8 +362,8 @@ export default function Home() {
             { label: "RSI", val: latestRSI ? latestRSI.toFixed(1) : "—", sub: latestRSI ? (latestRSI < 35 ? "Oversold" : latestRSI > 65 ? "Overbought" : "Neutral") : "", color: latestRSI ? (latestRSI < 35 ? "text-green-400" : latestRSI > 65 ? "text-red-400" : "text-white") : "text-white" },
             { label: "Leverage", val: config.leverage ? `${config.leverage}x` : "—", sub: config.kline_interval ?? "", color: "text-purple-300" },
           ].map(({ label, val, sub, color }) => (
-            <div key={label} className="bg-[#0d1420] border border-gray-800/60 rounded-xl px-4 py-3">
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">{label}</p>
+            <div key={label} className={cardCompact}>
+              <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">{label}</p>
               <p className={`text-lg font-bold font-mono ${color}`}>{val}</p>
               <p className="text-[10px] text-gray-600 mt-0.5">{sub}</p>
             </div>
@@ -371,7 +374,8 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Price Chart */}
-          <div className="lg:col-span-2 bg-[#0d1420] border border-gray-800/60 rounded-xl p-4">
+          <div className="lg:col-span-2">
+            <div className={card}>
             <div className="flex justify-between items-center mb-3">
               <span className="text-[10px] text-gray-500 uppercase tracking-widest">Price · 5m</span>
               <span className="text-sm font-mono font-bold text-white">{curPrice ? `$${curPrice.toLocaleString()}` : "—"}</span>
@@ -391,10 +395,11 @@ export default function Home() {
                 <Area type="monotone" dataKey="price" name="Price" stroke="#3b82f6" fill="url(#pg)" strokeWidth={2} dot={false} />
               </AreaChart>
             </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Trading Panel */}
-          <div className="bg-[#0d1420] border border-gray-800/60 rounded-xl p-4 flex flex-col gap-4">
+          <div className={card}>
 
             {/* Symbol selector */}
             <div>
@@ -505,7 +510,7 @@ export default function Home() {
 
         {/* RSI + MACD */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="bg-[#0d1420] border border-gray-800/60 rounded-xl p-4">
+          <div className={card}>
             <div className="flex justify-between items-center mb-3">
               <span className="text-[10px] text-gray-500 uppercase tracking-widest">RSI (14)</span>
               <span className={`text-sm font-mono font-bold ${latestRSI < 35 ? "text-green-400" : latestRSI > 65 ? "text-red-400" : "text-white"}`}>
@@ -526,7 +531,7 @@ export default function Home() {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#0d1420] border border-gray-800/60 rounded-xl p-4">
+          <div className={card}>
             <div className="flex justify-between items-center mb-3">
               <span className="text-[10px] text-gray-500 uppercase tracking-widest">MACD (12/26/9)</span>
             </div>
@@ -546,7 +551,7 @@ export default function Home() {
         </div>
 
         {/* Bot Controls */}
-        <div className="bg-[#0d1420] border border-gray-800/60 rounded-xl p-4">
+        <div className={card}>
           <div className="flex flex-wrap gap-3 items-center">
             {!isRunning ? (
               <button onClick={startBot} disabled={loading}
@@ -590,7 +595,7 @@ export default function Home() {
         </div>
 
         {/* Trade History */}
-        <div className="bg-[#0d1420] border border-gray-800/60 rounded-xl p-4">
+        <div className={card}>
           <div className="flex justify-between items-center mb-4">
             <span className="text-[10px] text-gray-500 uppercase tracking-widest">Trade History</span>
             <span className="text-xs text-gray-600">{state?.trades?.length ?? 0} trades</span>
