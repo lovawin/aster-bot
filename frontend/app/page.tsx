@@ -188,7 +188,7 @@ function SettingsModal({ config, onSave, onClose }: { config: any; onSave: (c: a
         <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-800">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-500 hover:text-white transition-colors">Cancel</button>
           <button onClick={() => { onSave(f); onClose(); }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-lg transition-colors">
+            className={btnPrimary}>
             <Save size={13} /> Save Changes
           </button>
         </div>
@@ -231,6 +231,12 @@ export default function Home() {
   const btnBase = "py-2.5 rounded-xl text-sm font-bold transition-all";
   const btnInactive = "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white";
   const btnActive = "bg-blue-600 text-white shadow-lg shadow-blue-500/20";
+  // modern button variants
+  const btnIcon = "inline-flex items-center justify-center p-2 rounded-md bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors";
+  const btnPrimary = `${btnBase} inline-flex items-center gap-2 px-5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-md`;
+  const btnSecondary = `${btnBase} inline-flex items-center gap-2 px-4 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700`;
+  const btnSuccess = `${btnBase} inline-flex items-center gap-2 px-5 rounded-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-md`;
+  const btnDanger = `${btnBase} inline-flex items-center gap-2 px-4 rounded-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white shadow-sm`;
 
   const loadState = useCallback(async () => {
     try { setState(await call("/status")); } catch {}
@@ -321,7 +327,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Zap size={16} className="text-blue-400" />
-            <span className="text-sm font-bold tracking-wide text-white">ASTER PERPS BOT</span>
+            <span className="text-lg font-extrabold tracking-wide text-white">ASTER PERPS BOT</span>
           </div>
           <span className={`flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full border
             ${isRunning ? "text-green-400 border-green-500/30 bg-green-500/10" : "text-gray-500 border-gray-700 bg-gray-800/50"}`}>
@@ -329,13 +335,13 @@ export default function Home() {
             {state?.status ?? "loading"}
           </span>
         </div>
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
           <button onClick={() => { loadState(); loadKlines(sym); loadPrices(); }}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-400 hover:text-white transition-colors">
+            className={btnIcon}>
             <RefreshCw size={13} />
           </button>
           <button onClick={() => setShowSettings(true)}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-400 hover:text-white transition-colors">
+            className={btnIcon}>
             <Settings size={13} />
           </button>
         </div>
@@ -544,25 +550,25 @@ export default function Home() {
           <div className="flex flex-wrap gap-3 items-center">
             {!isRunning ? (
               <button onClick={startBot} disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-500 disabled:opacity-40 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-green-500/20">
+                className={`${btnSuccess} disabled:opacity-50`}>
                 <Play size={14} /> Start Bot
               </button>
             ) : (
               <button onClick={stopBot} disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gray-700 hover:bg-gray-600 disabled:opacity-40 text-white text-sm font-bold rounded-lg transition-all">
+                className={`${btnSecondary} disabled:opacity-50`}>
                 <Square size={14} /> Stop Bot
               </button>
             )}
             <button onClick={() => closePos("ETHUSDT")}
-              className="flex items-center gap-2 px-4 py-2.5 bg-red-900/40 hover:bg-red-800/60 border border-red-700/40 text-red-400 text-sm font-bold rounded-lg transition-all">
+              className={btnDanger}>
               <AlertTriangle size={13} /> Close ETH
             </button>
             <button onClick={() => closePos("BTCUSDT")}
-              className="flex items-center gap-2 px-4 py-2.5 bg-red-900/40 hover:bg-red-800/60 border border-red-700/40 text-red-400 text-sm font-bold rounded-lg transition-all">
+              className={btnDanger}>
               <AlertTriangle size={13} /> Close BTC
             </button>
             <button onClick={() => setShowSettings(true)}
-              className="ml-auto flex items-center gap-2 px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm font-bold rounded-lg transition-all">
+              className={`${btnSecondary} ml-auto`}>
               <Settings size={13} /> Configure
             </button>
           </div>
