@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+/.next/
+dist/
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# Logs
+logs/
+*.log
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+.env
+venv/
+__pycache__/
+*.pyc
+node_modules/
+.next/
+logs/*.log
