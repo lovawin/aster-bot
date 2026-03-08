@@ -332,9 +332,9 @@ export default function Home() {
             <Zap size={16} className="text-blue-400" />
             <span className="text-lg font-extrabold tracking-wide text-white">ASTER PERPS BOT</span>
           </div>
-          <span className={`flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full border
-            ${isRunning ? "text-green-400 border-green-500/30 bg-green-500/10" : "text-gray-500 border-gray-700 bg-gray-800/50"}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${isRunning ? "bg-green-400 animate-pulse" : "bg-gray-600"}`} />
+          <span className={`flex items-center gap-2 text-sm font-bold px-3 py-1.5 rounded-full border
+            ${isRunning ? "text-green-400 border-green-500/30 bg-green-500/10" : "text-gray-400 border-gray-700 bg-gray-800/60"}`} aria-live="polite">
+            <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${isRunning ? "bg-green-400 animate-pulse" : "bg-gray-600"}`} />
             {state?.status ?? "loading"}
           </span>
         </div>
